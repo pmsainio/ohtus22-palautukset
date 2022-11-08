@@ -19,5 +19,42 @@ class TestStatistics(unittest.TestCase):
             PlayerReaderStub()
         )
 
-    def test_sort(self):
-        self.assertAlmostEqual(self.statistics.sort_by_points, "")
+    def test_players_of_team(self):
+        players = self.statistics.team("EDM")
+
+        self.assertEqual(len(players), 3)
+
+    def test_player_search_when_found(self):
+        player = self.statistics.search("Gretzky")
+
+        self.assertEqual(player.name, "Gretzky")
+        self.assertEqual(player.points, 35+89)
+
+    def test_player_search_when_not_found(self):
+        player = self.statistics.search("Selänne")
+
+        self.assertEqual(player, None)
+
+    def test_top_scorers(self):
+        players = self.statistics.top(3)
+
+        self.assertEqual(len(players), 3)
+        self.assertEqual(players[0].name, "Gretzky")
+        self.assertEqual(players[1].name, "Lemieux")
+        self.assertEqual(players[2].name, "Yzerman")
+
+    def test_top_goal_scorers(self):
+        players = self.statistics.top(3, SortBy.GOALS)
+
+        self.assertEqual(len(players), 3)
+        self.assertEqual(players[0].name, "Lemieux")
+        self.assertEqual(players[1].name, "Yzerman")
+        self.assertEqual(players[2].name, "Kurri")
+
+    def test_top_assist_makers(self):
+        players = self.statistics.top(3, SortBy.ASSISTS)
+
+        self.assertEqual(len(players), 3)
+        self.assertEqual(players[0].name, "Gretzky")
+        self.assertEqual(players[1].name, "Yzerman")
+        self.assertEqual(players[2].name, "Lemieux")
