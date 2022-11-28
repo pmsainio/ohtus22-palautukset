@@ -35,6 +35,8 @@ class Ostoskori:
         for item in self.kori:
             if ostos.tuotteen_nimi() == item.tuotteen_nimi():
                 item.muuta_lukumaaraa(-1)
+                if item.lukumaara() == 0:
+                    self.kori.remove(item)
                 return
 
 
