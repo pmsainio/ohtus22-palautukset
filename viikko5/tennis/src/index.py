@@ -1,6 +1,5 @@
 from tennis_game import TennisGame
 
-
 def main():
     game = TennisGame("player1", "player2")
 
